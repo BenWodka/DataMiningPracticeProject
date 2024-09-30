@@ -1,12 +1,19 @@
 import pandas as pd
 import numpy as np
+from sklearn.preprocessing import LabelEncoder
+
+le = LabelEncoder()
+
+columns = ['age', 'workclass', 'fnlwgt', 'education', 'education-num',
+           'marital-status', 'occupation', 'relationship', 'race', 'sex',
+           'capital-gain', 'capital-loss', 'hours-per-week', 'native-country', 'income']
 # Data Preprocessing Q1
 # 1. Remove records with unknown (?) values from both train and test data sets and remove all continuous attributes.
 # Read file and remove whitespace
-dfTrain = pd.read_csv('trainOri.csv',skipinitialspace=True)
-dfTest = pd.read_csv('testOri.csv',skipinitialspace=True)
+dfTrain = pd.read_csv('adult/adult-data.csv', header = None, names = columns, skipinitialspace=True)
+dfTest = pd.read_csv('adult/adult-test.csv', header = None, names = columns, skipinitialspace=True)
 #Remove "." from income
-dfTest["income"] = dfTest["income"].str.replace(".","")
+#dfTest["income"] = dfTest["income"].str.replace(".","")
 # Remove question mark
 dfTrain = dfTrain[(dfTrain.values !='?').all(axis=1)]
 dfTest = dfTest[(dfTest.values !='?').all(axis=1)]
@@ -61,8 +68,8 @@ print(classification_report(Y_test, predictions))
 # Data Preprocessing Q2
 # Read file and remove whitespace
 # Remove "." from income, question mark
-dfTrain = pd.read_csv('trainOri.csv',skipinitialspace=True)
-dfTest = pd.read_csv('testOri.csv',skipinitialspace=True)
+dfTrain = pd.read_csv('adult/adult-data.csv', header = None, names = columns, skipinitialspace=True)
+dfTest = pd.read_csv('adult/adult-test.csv', header = None, names = columns, skipinitialspace=True)
 dfTest["income"] = dfTest["income"].str.replace(".","")
 dfTrain = dfTrain[(dfTrain.values !='?').all(axis=1)]
 dfTest = dfTest[(dfTest.values !='?').all(axis=1)]
@@ -120,8 +127,8 @@ print(kmeans.cluster_centers_)
 # KNN
 from sklearn.neighbors import KNeighborsClassifier
 
-dfTrain = pd.read_csv('trainOri.csv',skipinitialspace=True)
-dfTest = pd.read_csv('testOri.csv',skipinitialspace=True)[-11:]
+dfTrain = pd.read_csv('adult/adult-data.csv', header = None, names = columns, skipinitialspace=True)
+dfTest = pd.read_csv('adult/adult-test.csv', header = None, names = columns, skipinitialspace=True)[-11:]
 dfTest["income"] = dfTest["income"].str.replace(".","")
 dfTrain = dfTrain[(dfTrain.values !='?').all(axis=1)]
 dfTest = dfTest[(dfTest.values !='?').all(axis=1)]
